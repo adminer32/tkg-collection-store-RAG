@@ -1,0 +1,1034 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "6699175e0284906e137bca84cf0d29df6ad15b6f",
+  "generatedAt": "2026-09-16T01:27:41.643Z",
+  "files": {
+    ".github/workflows/core-check.yml": {
+      "filePath": ".github/workflows/core-check.yml",
+      "contentHash": "bb7c47ed2f261799379b534227d614f204a97bc22d3c8623d01c0038974c7dc1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": true
+    },
+    ".github/workflows/deploy-dokploy.yml": {
+      "filePath": ".github/workflows/deploy-dokploy.yml",
+      "contentHash": "2cd17082621f3a95f8c5ef39e660f7538cd5e8d4a213e56a8e275d8820093581",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    ".npmrc": {
+      "filePath": ".npmrc",
+      "contentHash": "7151cf397def0c2cb0ab65643701d27d335a72c90f775675b5f826bc7005818a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": false
+    },
+    ".svelte-kit/ambient.d.ts": {
+      "filePath": ".svelte-kit/ambient.d.ts",
+      "contentHash": "286a42a36a20283c4253d274ec68328a6ec0e5eb6e20057d631adeea17128ae5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 309,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/env.d.ts": {
+      "filePath": ".svelte-kit/env.d.ts",
+      "contentHash": "15f25e1d429019efb53cc9375676b2f471987e3da24e304401b8749d498d89ab",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/client/app.js": {
+      "filePath": ".svelte-kit/generated/client/app.js",
+      "contentHash": "d29738234b7384ffc1a6f253b2892d77e3915982c5eefe2b19ecdddd34a536ef",
+      "functions": [
+        {
+          "name": "decode",
+          "params": [
+            "type",
+            "value"
+          ],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "get_error_template",
+          "params": [],
+          "exported": true,
+          "lineCount": 1
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "matchers",
+        "nodes",
+        "server_loads",
+        "dictionary",
+        "hooks",
+        "decoders",
+        "encoders",
+        "hash",
+        "decode",
+        "root",
+        "get_error_template"
+      ],
+      "totalLines": 51,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/client/matchers.js": {
+      "filePath": ".svelte-kit/generated/client/matchers.js",
+      "contentHash": "3d455d6f28b2385d5ee588ca9a6b7e620fe3eb5434b48ac67d1fa2eaf3395791",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "matchers"
+      ],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/client/nodes/0.js": {
+      "filePath": ".svelte-kit/generated/client/nodes/0.js",
+      "contentHash": "c78ec343c7482618d2aae3d690077ee91dbb940548a58ecc61477b08351cc34a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "component"
+      ],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/client/nodes/1.js": {
+      "filePath": ".svelte-kit/generated/client/nodes/1.js",
+      "contentHash": "9a1dceeee2f6ffc5c565982c7fb8cd5093020278ba9735916f976f33dbd7daf0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "component"
+      ],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/client/nodes/2.js": {
+      "filePath": ".svelte-kit/generated/client/nodes/2.js",
+      "contentHash": "6ff1de5b7e8a19012fe4811068cb77c659b2c7dc08286236435ea1bbd407d49c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "component"
+      ],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/client/nodes/3.js": {
+      "filePath": ".svelte-kit/generated/client/nodes/3.js",
+      "contentHash": "a335e86d5fc33d467f435a5379498cd8d38d3f2d709b670a876a34f70c2dd8ec",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "component"
+      ],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/client/nodes/4.js": {
+      "filePath": ".svelte-kit/generated/client/nodes/4.js",
+      "contentHash": "87c6287021c34a2dbab79d1be4277ea9881eeb8e1b284d7fa60df326778ba78a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "component"
+      ],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/client/nodes/5.js": {
+      "filePath": ".svelte-kit/generated/client/nodes/5.js",
+      "contentHash": "097730f291375ada3a0066176d2bf9917963e5c30c3204b441661ff2e937047a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "component"
+      ],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/client/nodes/6.js": {
+      "filePath": ".svelte-kit/generated/client/nodes/6.js",
+      "contentHash": "e9fdbbf2c422ed58f08cb5013f286cec28a3a8a4346dbfeaffcf4b88d93531c5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "component"
+      ],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/client/nodes/7.js": {
+      "filePath": ".svelte-kit/generated/client/nodes/7.js",
+      "contentHash": "a3f06394dc64ee1dee1bf225ad8744eb2aa5d847c44f5cf0aedac45f43ae927b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "component"
+      ],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/client/nodes/8.js": {
+      "filePath": ".svelte-kit/generated/client/nodes/8.js",
+      "contentHash": "57efbbd22d6d188b9fe15b6228cb66fca6b8c1ed98aa529e248e06bee12b0510",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "component"
+      ],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/root.js": {
+      "filePath": ".svelte-kit/generated/root.js",
+      "contentHash": "e607432f812af761678250af6b7cf2f94d72f415371bdc676605870e670d9461",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "svelte/legacy",
+          "specifiers": [
+            "asClassComponent"
+          ]
+        },
+        {
+          "source": "./root.svelte",
+          "specifiers": [
+            "Root"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 3,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/root.svelte": {
+      "filePath": ".svelte-kit/generated/root.svelte",
+      "contentHash": "0a2d2d12e92088e06a68182c8bac8e1a6f3012137cc230984f6acb374323cbbd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 68,
+      "hasStructuralAnalysis": false
+    },
+    ".svelte-kit/generated/server/internal.js": {
+      "filePath": ".svelte-kit/generated/server/internal.js",
+      "contentHash": "1e99f9bc61827ae7cdb1464110326ceafd618ab499ebae6bcf7d444c6be6810d",
+      "functions": [
+        {
+          "name": "get_hooks",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../root.js",
+          "specifiers": [
+            "root"
+          ]
+        },
+        {
+          "source": "$app/env/internal",
+          "specifiers": [
+            "set_building",
+            "set_prerendering"
+          ]
+        },
+        {
+          "source": "$app/paths/internal/server",
+          "specifiers": [
+            "set_assets"
+          ]
+        },
+        {
+          "source": "__sveltekit/server",
+          "specifiers": [
+            "set_manifest",
+            "set_read_implementation"
+          ]
+        },
+        {
+          "source": "../../../node_modules/@sveltejs/kit/src/runtime/shared-server.js",
+          "specifiers": [
+            "set_private_env",
+            "set_public_env"
+          ]
+        },
+        {
+          "source": "../shared/error-template.js",
+          "specifiers": [
+            "error"
+          ]
+        }
+      ],
+      "exports": [
+        "options",
+        "get_hooks",
+        "set_assets",
+        "set_building",
+        "set_manifest",
+        "set_prerendering",
+        "set_private_env",
+        "set_public_env",
+        "set_read_implementation"
+      ],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/generated/shared/error-template.js": {
+      "filePath": ".svelte-kit/generated/shared/error-template.js",
+      "contentHash": "2fcc81501141025519aea816128fc96be27155b940ce783e3a876e31ee474acf",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/non-ambient.d.ts": {
+      "filePath": ".svelte-kit/non-ambient.d.ts",
+      "contentHash": "9563fc9ef1812b6234e18b85e037cc4bbf2cacf4b0610aa17bafb399e185e20c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 54,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/tsconfig.json": {
+      "filePath": ".svelte-kit/tsconfig.json",
+      "contentHash": "c01d35eee60b3cb21e230c392c72c947234d7f406b83959a042a63e09db454c4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/types/route_meta_data.json": {
+      "filePath": ".svelte-kit/types/route_meta_data.json",
+      "contentHash": "746d9cbf4bc2e6940c2ab8211cdb057f2be4922fb46abab5c1ff2ad6aff6eaa9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/types/src/routes/$types.d.ts": {
+      "filePath": ".svelte-kit/types/src/routes/$types.d.ts",
+      "contentHash": "b36bfe47cfe82a716d2347201079512cf551bba03617f86217f0c34033708f55",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "* as Kit"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/types/src/routes/about/$types.d.ts": {
+      "filePath": ".svelte-kit/types/src/routes/about/$types.d.ts",
+      "contentHash": "dd92e137e0cf941b4c8336ba63c38bcf179f0509922d39267074f190b0956baf",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "* as Kit"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/types/src/routes/about/contact/$types.d.ts": {
+      "filePath": ".svelte-kit/types/src/routes/about/contact/$types.d.ts",
+      "contentHash": "a9f8bcfce267d6ab08375461252e137a49c23b70ad473de8bdd016316700bccd",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "* as Kit"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/types/src/routes/api/auth/login/$types.d.ts": {
+      "filePath": ".svelte-kit/types/src/routes/api/auth/login/$types.d.ts",
+      "contentHash": "5bee13094801caf765262c1649714fc40d5ab0922d6c957c2cc80866c252dd97",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "* as Kit"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/types/src/routes/api/auth/logout/$types.d.ts": {
+      "filePath": ".svelte-kit/types/src/routes/api/auth/logout/$types.d.ts",
+      "contentHash": "0fea65cb19c700aa568e086bdb6fe148cf0e2a9b73165a38328f064c8cb3f0ed",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "* as Kit"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/types/src/routes/api/auth/register/$types.d.ts": {
+      "filePath": ".svelte-kit/types/src/routes/api/auth/register/$types.d.ts",
+      "contentHash": "a963460374e334695202798b56d0c71c42cb3995079b9d7c0643b07f4b28e4b4",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "* as Kit"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/types/src/routes/auth/$types.d.ts": {
+      "filePath": ".svelte-kit/types/src/routes/auth/$types.d.ts",
+      "contentHash": "f7eeedb75f4d4677d32a3c1daaacbfae49807ab31e1bd990d7f8e307f6c07d55",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "* as Kit"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/types/src/routes/shop/$types.d.ts": {
+      "filePath": ".svelte-kit/types/src/routes/shop/$types.d.ts",
+      "contentHash": "729789267b46c3882e48a0efc1e2d068f858968ccc3a61e8cb5c6341576b9996",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "* as Kit"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/types/src/routes/shop/sent/$types.d.ts": {
+      "filePath": ".svelte-kit/types/src/routes/shop/sent/$types.d.ts",
+      "contentHash": "1aa7be6022a6fe584d4e8a64da74ba14c6c7dcc1883e8476a8873fe5c78a3e7e",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "* as Kit"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    ".svelte-kit/types/src/routes/userspace/$types.d.ts": {
+      "filePath": ".svelte-kit/types/src/routes/userspace/$types.d.ts",
+      "contentHash": "7eb708a8b0bfda145770d5aeb5bc284068097b65533eeb9650e6579ff7ab264e",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "* as Kit"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    ".understand-anything/.understandignore": {
+      "filePath": ".understand-anything/.understandignore",
+      "contentHash": "65c580fc641d6c06b4e3993c49901f1928c4e32b2f9b709c68ba50ee6fbf4cca",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": false
+    },
+    ".understand-anything/config.json": {
+      "filePath": ".understand-anything/config.json",
+      "contentHash": "cf5ec638b0e283c436761f5b7664b9665fcf2e2a79bd6e2f1ff50b52e9f92c7d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4,
+      "hasStructuralAnalysis": true
+    },
+    "项目配置debug报告.md": {
+      "filePath": "项目配置debug报告.md",
+      "contentHash": "7c3ba3a83d6a8526dc4170334d6fdb5ec0bad2986742080318b6c9f4dcab8461",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 583,
+      "hasStructuralAnalysis": true
+    },
+    "CI/CD手册": {
+      "filePath": "CI/CD手册",
+      "contentHash": "d6ca2f0b8a3ea92e9aafc252cb193a469350f929f370ec829fb09395260866e2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 143,
+      "hasStructuralAnalysis": false
+    },
+    "Dockerfile": {
+      "filePath": "Dockerfile",
+      "contentHash": "480f690469366869fca6a51d0ea625b215857b9983f50ed6dd93b34c123e62f9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    },
+    "package.json": {
+      "filePath": "package.json",
+      "contentHash": "9bbe66006193c560d8caf03946034452422eedb1194b7b38534c8272ceecbfd5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 34,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "1db8aa87bdc56ad13a24ff70d10b29cfaa696c79472c3c621a8afefdbb940aaf",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 43,
+      "hasStructuralAnalysis": true
+    },
+    "scripts/build-tailwind.js": {
+      "filePath": "scripts/build-tailwind.js",
+      "contentHash": "6fc5165d23ea0f80aa7c014e96e0eb6d11b8ee0f29ffff0e7bd0d88a0d878745",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "src/app.css": {
+      "filePath": "src/app.css",
+      "contentHash": "8a760a784f79570e06fdcb0c6a2677ea66c304230b7925ea313d63b46d8ba407",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": false
+    },
+    "src/app.d.ts": {
+      "filePath": "src/app.d.ts",
+      "contentHash": "3d450fc2fc7b0f10b6a9493a682769aac34f8b612f0f5d1bc4845a7b0bfe9f0a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 14,
+      "hasStructuralAnalysis": true
+    },
+    "src/app.html": {
+      "filePath": "src/app.html",
+      "contentHash": "824aebe3df873b559437d5e9dbf97f09f35c3b006608950cb582bcfbeae85faa",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": false
+    },
+    "src/lib/Footer.svelte": {
+      "filePath": "src/lib/Footer.svelte",
+      "contentHash": "3769af82c6e50ed54a04a61cd48e58fae62cde18ffdc5b136436b86bdb73755e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 200,
+      "hasStructuralAnalysis": false
+    },
+    "src/lib/index.ts": {
+      "filePath": "src/lib/index.ts",
+      "contentHash": "4beec0ade3bea5be651939b305bccf69d48506c74eda0a1a50a0dd6c79c4e91a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/Navbar.svelte": {
+      "filePath": "src/lib/Navbar.svelte",
+      "contentHash": "4464f05b2ad212ca69a3d0ab6530deb8256b1875f887e9bc92a3f6126ecce33b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 242,
+      "hasStructuralAnalysis": false
+    },
+    "src/lib/server/db.ts": {
+      "filePath": "src/lib/server/db.ts",
+      "contentHash": "74eee87fd794873c948b9242c8175b9231be7c87122e61eaab151c66fe483520",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "better-sqlite3",
+          "specifiers": [
+            "Database"
+          ]
+        },
+        {
+          "source": "$env/dynamic/private",
+          "specifiers": [
+            "env"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/stores/auth.ts": {
+      "filePath": "src/lib/stores/auth.ts",
+      "contentHash": "9cc5af7d099760bc82fce7ff1d78ce74b5b6d61e4ff15e33c1c8238f1461c672",
+      "functions": [
+        {
+          "name": "createAuthStore",
+          "params": [],
+          "exported": false,
+          "lineCount": 46
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "svelte/store",
+          "specifiers": [
+            "writable"
+          ]
+        },
+        {
+          "source": "$app/environment",
+          "specifiers": [
+            "browser"
+          ]
+        }
+      ],
+      "exports": [
+        "auth"
+      ],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/+layout.svelte": {
+      "filePath": "src/routes/+layout.svelte",
+      "contentHash": "ec1d215f5924ff20d90a29d01785809d8012918f41f2d3997e104c25a9914d7b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": false
+    },
+    "src/routes/+page.svelte": {
+      "filePath": "src/routes/+page.svelte",
+      "contentHash": "9dd633ced2345cf3712ded48cdba85cb07933348909e5681a3d2d941627403c0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 3,
+      "hasStructuralAnalysis": false
+    },
+    "src/routes/about/+page.svelte": {
+      "filePath": "src/routes/about/+page.svelte",
+      "contentHash": "8a2b8bbd12f643d06a4cf5b4b08cdecd13ba03a2cfd59e12011e6c2a4f5dd3f8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 96,
+      "hasStructuralAnalysis": false
+    },
+    "src/routes/about/contact/+page.svelte": {
+      "filePath": "src/routes/about/contact/+page.svelte",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": false
+    },
+    "src/routes/api/auth/login/+server.ts": {
+      "filePath": "src/routes/api/auth/login/+server.ts",
+      "contentHash": "45d56c7c66ac4e942c87b8e6a1304aa44f17c7753a6f7bfbca7caa2bbf642a51",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "{ request }"
+          ],
+          "exported": true,
+          "lineCount": 42
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "$lib/server/db",
+          "specifiers": [
+            "db"
+          ]
+        },
+        {
+          "source": "bcryptjs",
+          "specifiers": [
+            "bcrypt"
+          ]
+        },
+        {
+          "source": "jsonwebtoken",
+          "specifiers": [
+            "jwt"
+          ]
+        },
+        {
+          "source": "$env/dynamic/private",
+          "specifiers": [
+            "env"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/api/auth/logout/+server.ts": {
+      "filePath": "src/routes/api/auth/logout/+server.ts",
+      "contentHash": "a4b7d73077182704693bc365834cc37b58c50df5535a583a3f8dac16cc6a2175",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "{ cookies }"
+          ],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "RequestHandler"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 8,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/api/auth/register/+server.ts": {
+      "filePath": "src/routes/api/auth/register/+server.ts",
+      "contentHash": "51f435ac4fffd44265fb84f92b7a6c0553832c2a97e9a857eec08c9546c7670f",
+      "functions": [
+        {
+          "name": "POST",
+          "params": [
+            "{ request }"
+          ],
+          "exported": true,
+          "lineCount": 34
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/kit",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "$lib/server/db",
+          "specifiers": [
+            "db"
+          ]
+        },
+        {
+          "source": "uuid",
+          "specifiers": [
+            "uuidv4"
+          ]
+        },
+        {
+          "source": "bcryptjs",
+          "specifiers": [
+            "bcrypt"
+          ]
+        }
+      ],
+      "exports": [
+        "POST"
+      ],
+      "totalLines": 41,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/auth/+page.svelte": {
+      "filePath": "src/routes/auth/+page.svelte",
+      "contentHash": "c58d0c1aa8623ceecccece1e9ec88830b39427990548baad9d689ceb341c00f7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 881,
+      "hasStructuralAnalysis": false
+    },
+    "src/routes/shop/+page.svelte": {
+      "filePath": "src/routes/shop/+page.svelte",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": false
+    },
+    "src/routes/shop/sent/+page.svelte": {
+      "filePath": "src/routes/shop/sent/+page.svelte",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": false
+    },
+    "src/routes/userspace/+page.svelte": {
+      "filePath": "src/routes/userspace/+page.svelte",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": false
+    },
+    "static/robots.txt": {
+      "filePath": "static/robots.txt",
+      "contentHash": "b033243267bcbdab84cb01e940811d6d77a894d78f0470faaf0eb43f8e4efcc9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4,
+      "hasStructuralAnalysis": false
+    },
+    "svelte.config.js": {
+      "filePath": "svelte.config.js",
+      "contentHash": "dc836a7bf8f2e610eb2f3cd6087ec73166a7265c4e4bffe62f39fd1dd4ff9ce4",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@sveltejs/adapter-auto",
+          "specifiers": [
+            "adapter"
+          ]
+        },
+        {
+          "source": "@sveltejs/vite-plugin-svelte",
+          "specifiers": [
+            "vitePreprocess"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": true
+    },
+    "tailwind.config.cjs": {
+      "filePath": "tailwind.config.cjs",
+      "contentHash": "a72cee7b16f00ad1694c654c0b1346aced9f01454329247849f4e13cdc163b2a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": true
+    },
+    "temp-out.css": {
+      "filePath": "temp-out.css",
+      "contentHash": "a9cc5a0d9ddbfe1da84b2608d12fc361a551631cdba33185587647f0dec65106",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 5,
+      "hasStructuralAnalysis": false
+    },
+    "tmp_root.html": {
+      "filePath": "tmp_root.html",
+      "contentHash": "4c4731d3f991b51d916b2f2331b9c81b3a714050ed14e43126cbc930d2c38132",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": false
+    },
+    "tsconfig.json": {
+      "filePath": "tsconfig.json",
+      "contentHash": "7a19bf2d57ef51ed3d7ddb0ed6ac3c4aa89025ab1cc2b0271132477905763134",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "vite.config.ts": {
+      "filePath": "vite.config.ts",
+      "contentHash": "f82621997912b40fcb66ed06b21adce1d4df184b1e39219e36321b7f0c5cc892",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@tailwindcss/vite",
+          "specifiers": [
+            "tailwindcss"
+          ]
+        },
+        {
+          "source": "@sveltejs/kit/vite",
+          "specifiers": [
+            "sveltekit"
+          ]
+        },
+        {
+          "source": "vite",
+          "specifiers": [
+            "defineConfig"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 8,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

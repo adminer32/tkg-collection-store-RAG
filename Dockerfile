@@ -36,6 +36,8 @@ ENV PORT=3000
 ENV NODE_ENV=production
 # 预设数据库路径环境变量（供代码调用）
 ENV DATABASE_PATH="/app/data/database.sqlite"
+# Go RAG sidecar（docker compose 中指向 rag 服务）
+ENV RAG_URL="http://127.0.0.1:8081"
 
 # 1. 关键：创建持久化数据目录并赋予权限
 # 这样即便你还没挂载 Volume，程序启动时也不会因为找不到目录而报错
@@ -44,6 +46,7 @@ RUN mkdir -p /app/data && chmod 777 /app/data
 # 2. 从 builder 阶段拷贝构建产物
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/services/rag/data/catalog.json ./services/rag/data/catalog.json
 
 # 3. 仅安装生产环境依赖
 # 注意：如果你的 SQLite 驱动在这一步仍然触发编译，说明上面的拷贝需要调整

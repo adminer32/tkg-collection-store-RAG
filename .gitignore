@@ -7,7 +7,6 @@ node_modules
 .wrangler
 /.svelte-kit
 /build
-/dist
 
 # OS
 .DS_Store
@@ -22,3 +21,13 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Go
+services/rag/tkg-rag
+services/rag/tkg-rag.exe
+services/rag/.gocache
+services/rag/.gomodcache
+
+# Agent scratch (stable memory lives in .agents/memory)
+.agents/scratch/
+.npm-cache/

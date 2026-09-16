@@ -1,0 +1,34 @@
+services:
+  rag:
+    build:
+      context: ./services/rag
+    environment:
+      RAG_ADDR: :8081
+      RAG_DATA_DIR: /app/data
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8081/healthz"]
+      interval: 15s
+      timeout: 3s
+      retries: 8
+
+  web:
+    build:
+      context: .
+    environment:
+      HOST: 0.0.0.0
+      PORT: "3000"
+      NODE_ENV: production
+      DATABASE_PATH: /app/data/database.sqlite
+      RAG_URL: http://rag:8081
+    ports:
+      - "3000:3000"
+    depends_on:
+      rag:
+        condition: service_started
+    volumes:
+      - store-data:/app/data
+
+volumes:
+  store-data:

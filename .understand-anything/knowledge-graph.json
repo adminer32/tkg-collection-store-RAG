@@ -1,0 +1,2217 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "tkg-collection-store",
+    "languages": [
+      "css",
+      "dockerfile",
+      "html",
+      "javascript",
+      "json",
+      "markdown",
+      "svelte",
+      "txt",
+      "typescript",
+      "unknown",
+      "yaml"
+    ],
+    "frameworks": [
+      "SvelteKit",
+      "Svelte",
+      "Vite",
+      "Tailwind CSS",
+      "Docker",
+      "GitHub Actions"
+    ],
+    "description": "基于 SvelteKit 的收藏品商店前端应用，提供认证、商店与用户空间页面，使用 SQLite、JWT 与 Tailwind，并通过 Docker 与 GitHub Actions 部署。",
+    "analyzedAt": "2026-09-16T01:27:16.316Z",
+    "gitCommitHash": "6699175e0284906e137bca84cf0d29df6ad15b6f"
+  },
+  "nodes": [
+    {
+      "id": "service:Dockerfile",
+      "type": "service",
+      "name": "Dockerfile",
+      "filePath": "Dockerfile",
+      "summary": "两阶段 Docker 构建：在 builder 中编译 better-sqlite3 并执行 SvelteKit 构建，再产出仅含 sqlite3 运行时的 Node.js 生产镜像，监听 3000 端口并以 node build 启动。",
+      "tags": [
+        "容器化",
+        "基础设施",
+        "部署",
+        "多阶段构建",
+        "sqlite"
+      ],
+      "complexity": "simple",
+      "languageNotes": "多阶段 Dockerfile：builder 安装 python3/make/g++ 以编译原生 C++ 模块；生产阶段从 builder 拷贝 /app/build，设置 HOST/PORT/DATABASE_PATH，并预创建 /app/data 目录。"
+    },
+    {
+      "id": "service:Dockerfile:builder",
+      "type": "service",
+      "name": "builder",
+      "filePath": "Dockerfile",
+      "lineRange": [
+        2,
+        23
+      ],
+      "summary": "基于 node:20-slim 的构建阶段：安装编译工具链、npm install 全量依赖，并运行 npm run build 生成 SvelteKit 产物。",
+      "tags": [
+        "容器化",
+        "构建阶段",
+        "原生模块",
+        "sveltekit"
+      ],
+      "complexity": "simple",
+      "languageNotes": "为编译 better-sqlite3 等 native addon，在 slim 镜像中额外安装 python3、make 与 g++。"
+    },
+    {
+      "id": "service:Dockerfile:node",
+      "type": "service",
+      "name": "node",
+      "filePath": "Dockerfile",
+      "lineRange": [
+        24,
+        56
+      ],
+      "summary": "生产运行阶段：仅安装 sqlite3 运行时，从 builder 拷贝构建产物与 package.json，以生产依赖启动 Node 服务并暴露 3000 端口。",
+      "tags": [
+        "容器化",
+        "生产环境",
+        "sqlite",
+        "部署"
+      ],
+      "complexity": "simple",
+      "languageNotes": "通过 ENV 预设 HOST=0.0.0.0、PORT=3000 与 DATABASE_PATH=/app/data/database.sqlite；CMD 使用 JSON 数组形式以便 docker stop 正确传递信号。"
+    },
+    {
+      "id": "pipeline:.github/workflows/core-check.yml",
+      "type": "pipeline",
+      "name": "core-check.yml",
+      "filePath": ".github/workflows/core-check.yml",
+      "summary": "GitHub Actions 工作流，在 pull_request 与 main 分支 push 时调用 JianyueLab 组织级 reusable web-check 流程，对前端代码执行核心质量检查。",
+      "tags": [
+        "ci-cd",
+        "github-actions",
+        "quality-check",
+        "reusable-workflow",
+        "infrastructure"
+      ],
+      "complexity": "simple",
+      "languageNotes": "通过 uses 引用组织级 reusable workflow，本仓库只声明触发条件与 job 入口，检查逻辑集中在外部 web-check.yml。"
+    },
+    {
+      "id": "pipeline:.github/workflows/deploy-dokploy.yml",
+      "type": "pipeline",
+      "name": "deploy-dokploy.yml",
+      "filePath": ".github/workflows/deploy-dokploy.yml",
+      "summary": "GitHub Actions 部署工作流，在 Core Check 与 CodeQL 于 main 分支成功完成后，调用 Dokploy reusable workflow 将应用部署到 https://tkgsan.cn/。",
+      "tags": [
+        "ci-cd",
+        "deployment",
+        "dokploy",
+        "github-actions",
+        "infrastructure"
+      ],
+      "complexity": "simple",
+      "languageNotes": "使用 workflow_run 串联上游检查，并在 job 级 if 中要求 conclusion 为 success 后才部署；secrets: inherit 透传 Dokploy 凭据。"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "SvelteKit 官方 sv CLI 生成的入门 README，覆盖项目创建、本地开发与生产构建命令，并提示部署时需安装对应 adapter。",
+      "tags": [
+        "documentation",
+        "entry-point",
+        "入门指南",
+        "sveltekit",
+        "开发文档"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "定义 tkg-collection-store 的 npm 脚本与依赖：Vite/SvelteKit 构建与类型检查，以及 Tailwind CSS v4、better-sqlite3、JWT 与 bcryptjs。",
+      "tags": [
+        "configuration",
+        "build-system",
+        "依赖管理",
+        "sveltekit",
+        "脚本"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:temp-out.css",
+      "type": "file",
+      "name": "temp-out.css",
+      "filePath": "temp-out.css",
+      "summary": "Tailwind CSS v4 编译产物片段，仅包含 `.contents { display: contents }`，疑似调试时留下的临时输出。",
+      "tags": [
+        "stylesheet",
+        "tailwind",
+        "调试产物",
+        "generated"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Tailwind v4 以 CSS-first 方式生成 utility；此文件只保留了极小的编译子集。"
+    },
+    {
+      "id": "file:tmp_root.html",
+      "type": "file",
+      "name": "tmp_root.html",
+      "filePath": "tmp_root.html",
+      "summary": "损坏或未完成的临时 HTML 片段，内容为乱码，可能是调试应用壳 HTML 时留下的残留文件。",
+      "tags": [
+        "html",
+        "临时文件",
+        "调试产物",
+        "markup"
+      ],
+      "complexity": "simple",
+      "languageNotes": "文件疑似含 BOM 或二进制残留，不是可解析的有效 HTML 文档。"
+    },
+    {
+      "id": "config:tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "tsconfig.json",
+      "summary": "扩展 SvelteKit 生成的 TypeScript 配置，启用 strict、bundler moduleResolution 与 JS 检查；路径别名由 Kit 配置管理。",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system",
+        "sveltekit",
+        "类型检查"
+      ],
+      "complexity": "simple",
+      "languageNotes": "通过 extends .svelte-kit/tsconfig.json 继承 include/exclude；注释明确 $lib 与 alias 由 SvelteKit 管理，而非本文件。"
+    },
+    {
+      "id": "document:项目配置debug报告.md",
+      "type": "document",
+      "name": "项目配置debug报告.md",
+      "filePath": "项目配置debug报告.md",
+      "summary": "记录 Tailwind CSS v4 与 SvelteKit 配置失败的完整复盘，分析 v3/v4 架构冲突与 AI Agent 知识滞后，并给出版本感知、配置冲突检测等改进规范。",
+      "tags": [
+        "documentation",
+        "故障复盘",
+        "tailwind",
+        "sveltekit",
+        "调试"
+      ],
+      "complexity": "complex",
+      "languageNotes": "中英混排的长篇技术复盘，含故障时间线、代码示例与外部参考链接。"
+    },
+    {
+      "id": "file:.npmrc",
+      "type": "file",
+      "name": ".npmrc",
+      "filePath": ".npmrc",
+      "summary": "npm 配置，启用 engine-strict，要求安装时严格匹配 package.json 中声明的 Node/引擎版本。",
+      "tags": [
+        "configuration",
+        "npm",
+        "engine-strict",
+        "构建约束"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/ambient.d.ts",
+      "type": "file",
+      "name": "ambient.d.ts",
+      "filePath": ".svelte-kit/ambient.d.ts",
+      "summary": "SvelteKit 生成的 ambient 类型声明，为 `$env/static` 与 `$env/dynamic` 的公私环境变量模块提供 TypeScript 类型。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "环境变量"
+      ],
+      "complexity": "complex",
+      "languageNotes": "通过 declare module 为虚拟模块 `$env/*` 注入类型，构建时由 Vite 静态替换对应环境变量。"
+    },
+    {
+      "id": "file:.svelte-kit/env.d.ts",
+      "type": "file",
+      "name": "env.d.ts",
+      "filePath": ".svelte-kit/env.d.ts",
+      "summary": "SvelteKit 生成的环境变量类型占位文件，仅包含指向官方文档的注释，实际类型由 ambient.d.ts 提供。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "环境变量"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/client/app.js",
+      "type": "file",
+      "name": "app.js",
+      "filePath": ".svelte-kit/generated/client/app.js",
+      "summary": "SvelteKit 客户端清单：导出路由字典、惰性加载的页面节点、hooks 与编解码器，并指向根组件与错误页模板。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "entry-point",
+        "路由清单",
+        "客户端"
+      ],
+      "complexity": "simple",
+      "languageNotes": "通过动态 import() 按需加载 nodes/0–8，避免一次性打包全部页面组件。"
+    },
+    {
+      "id": "file:.svelte-kit/generated/client/matchers.js",
+      "type": "file",
+      "name": "matchers.js",
+      "filePath": ".svelte-kit/generated/client/matchers.js",
+      "summary": "SvelteKit 生成的客户端 param matcher 表，当前为空对象，表示项目未定义自定义路由匹配器。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "routing",
+        "matchers"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/client/nodes/0.js",
+      "type": "file",
+      "name": "0.js",
+      "filePath": ".svelte-kit/generated/client/nodes/0.js",
+      "summary": "客户端路由节点 0，将根布局组件 `src/routes/+layout.svelte` 再导出为 component。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "component",
+        "layout",
+        "barrel"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/client/nodes/1.js",
+      "type": "file",
+      "name": "1.js",
+      "filePath": ".svelte-kit/generated/client/nodes/1.js",
+      "summary": "客户端路由节点 1，再导出 SvelteKit 内置错误页组件 error.svelte。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "component",
+        "error-page",
+        "barrel"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/client/nodes/2.js",
+      "type": "file",
+      "name": "2.js",
+      "filePath": ".svelte-kit/generated/client/nodes/2.js",
+      "summary": "客户端路由节点 2，对应首页 `src/routes/+page.svelte`。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "component",
+        "路由节点",
+        "barrel"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/client/nodes/3.js",
+      "type": "file",
+      "name": "3.js",
+      "filePath": ".svelte-kit/generated/client/nodes/3.js",
+      "summary": "客户端路由节点 3，对应关于页 `src/routes/about/+page.svelte`。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "component",
+        "路由节点",
+        "barrel"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/client/nodes/4.js",
+      "type": "file",
+      "name": "4.js",
+      "filePath": ".svelte-kit/generated/client/nodes/4.js",
+      "summary": "客户端路由节点 4，对应联系页 `src/routes/about/contact/+page.svelte`。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "component",
+        "路由节点",
+        "barrel"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/client/nodes/5.js",
+      "type": "file",
+      "name": "5.js",
+      "filePath": ".svelte-kit/generated/client/nodes/5.js",
+      "summary": "客户端路由节点 5，对应认证页 `src/routes/auth/+page.svelte`。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "component",
+        "路由节点",
+        "认证"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/client/nodes/6.js",
+      "type": "file",
+      "name": "6.js",
+      "filePath": ".svelte-kit/generated/client/nodes/6.js",
+      "summary": "客户端路由节点 6，对应商店页 `src/routes/shop/+page.svelte`。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "component",
+        "路由节点",
+        "商店"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/client/nodes/7.js",
+      "type": "file",
+      "name": "7.js",
+      "filePath": ".svelte-kit/generated/client/nodes/7.js",
+      "summary": "客户端路由节点 7，对应商店已发送页 `src/routes/shop/sent/+page.svelte`。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "component",
+        "路由节点",
+        "商店"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/client/nodes/8.js",
+      "type": "file",
+      "name": "8.js",
+      "filePath": ".svelte-kit/generated/client/nodes/8.js",
+      "summary": "客户端路由节点 8，对应用户空间页 `src/routes/userspace/+page.svelte`。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "component",
+        "路由节点",
+        "用户空间"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/root.js",
+      "type": "file",
+      "name": "root.js",
+      "filePath": ".svelte-kit/generated/root.js",
+      "summary": "将生成的 root.svelte 通过 svelte/legacy 的 asClassComponent 包装为类组件后默认导出，供运行时挂载。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "entry-point",
+        "component",
+        "适配器"
+      ],
+      "complexity": "simple",
+      "languageNotes": "使用 asClassComponent 把 Svelte 5 runes 根组件适配为 Kit 运行时期望的类组件接口。"
+    },
+    {
+      "id": "file:.svelte-kit/generated/root.svelte",
+      "type": "file",
+      "name": "root.svelte",
+      "filePath": ".svelte-kit/generated/root.svelte",
+      "summary": "SvelteKit 生成的根组件：同步 page store、按 constructors 嵌套渲染布局与页面，并提供无障碍导航播报。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "component",
+        "root",
+        "layout"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "启用 runes 模式，用 $props/$state/$derived/$effect 管理客户端导航状态与布局金字塔渲染。"
+    },
+    {
+      "id": "file:.svelte-kit/generated/server/internal.js",
+      "type": "file",
+      "name": "internal.js",
+      "filePath": ".svelte-kit/generated/server/internal.js",
+      "summary": "SvelteKit 服务端内部入口：导出 CSP/CSRF 等运行时 options、HTML 模板，以及延迟加载的 hooks 与环境 setter。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "entry-point",
+        "server",
+        "hook"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:.svelte-kit/generated/server/internal.js:get_hooks",
+      "type": "function",
+      "name": "get_hooks",
+      "filePath": ".svelte-kit/generated/server/internal.js",
+      "lineRange": [
+        32,
+        53
+      ],
+      "summary": "异步返回服务端 hooks 对象；当前未配置用户 hooks，handle、handleError、transport 等均为空。",
+      "tags": [
+        "hook",
+        "sveltekit",
+        "generated",
+        "server"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/generated/shared/error-template.js",
+      "type": "file",
+      "name": "error-template.js",
+      "filePath": ".svelte-kit/generated/shared/error-template.js",
+      "summary": "默认错误页 HTML 模板函数，按 status 与 message 渲染居中错误界面，并支持深色模式。",
+      "tags": [
+        "sveltekit",
+        "generated",
+        "error-page",
+        "template",
+        "html"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/non-ambient.d.ts",
+      "type": "file",
+      "name": "non-ambient.d.ts",
+      "filePath": ".svelte-kit/non-ambient.d.ts",
+      "summary": "为 SvelteKit 的 data-* 导航属性以及 `$app/types` 中的 RouteId、Pathname、Asset 等应用级类型提供非 ambient 声明。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "路由类型"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.svelte-kit/tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": ".svelte-kit/tsconfig.json",
+      "summary": "SvelteKit 生成的 TypeScript 配置：映射 `$lib`/`$app/types` 路径别名，并包含 src、测试与生成类型文件。",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system",
+        "path-alias",
+        "sveltekit"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:.svelte-kit/types/route_meta_data.json",
+      "type": "config",
+      "name": "route_meta_data.json",
+      "filePath": ".svelte-kit/types/route_meta_data.json",
+      "summary": "路由元数据清单，列出各页面与 API 路径；仅认证相关 API 绑定了对应的 +server.ts 处理器。",
+      "tags": [
+        "configuration",
+        "sveltekit",
+        "generated",
+        "routing",
+        "api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/types/src/routes/$types.d.ts",
+      "type": "file",
+      "name": "$types.d.ts",
+      "filePath": ".svelte-kit/types/src/routes/$types.d.ts",
+      "summary": "根路由 `/` 的生成类型：导出 PageData、LayoutData、PageProps 与 LayoutProps，供首页与根布局使用。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "路由类型"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/types/src/routes/about/$types.d.ts",
+      "type": "file",
+      "name": "$types.d.ts",
+      "filePath": ".svelte-kit/types/src/routes/about/$types.d.ts",
+      "summary": "`/about` 路由的生成类型，继承根布局数据并导出 PageData 与 PageProps。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "路由类型"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/types/src/routes/about/contact/$types.d.ts",
+      "type": "file",
+      "name": "$types.d.ts",
+      "filePath": ".svelte-kit/types/src/routes/about/contact/$types.d.ts",
+      "summary": "`/about/contact` 路由的生成类型，继承根布局数据并导出联系页的 PageData 与 PageProps。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "路由类型"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/types/src/routes/api/auth/login/$types.d.ts",
+      "type": "file",
+      "name": "$types.d.ts",
+      "filePath": ".svelte-kit/types/src/routes/api/auth/login/$types.d.ts",
+      "summary": "`/api/auth/login` 的生成类型，导出该端点的 RequestHandler 与 RequestEvent。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "api-handler",
+        "认证"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/types/src/routes/api/auth/logout/$types.d.ts",
+      "type": "file",
+      "name": "$types.d.ts",
+      "filePath": ".svelte-kit/types/src/routes/api/auth/logout/$types.d.ts",
+      "summary": "SvelteKit 为登出 API 路由生成的类型占位，声明 POST RequestHandler 的请求与响应类型。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "api-handler"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/types/src/routes/api/auth/register/$types.d.ts",
+      "type": "file",
+      "name": "$types.d.ts",
+      "filePath": ".svelte-kit/types/src/routes/api/auth/register/$types.d.ts",
+      "summary": "SvelteKit 为注册 API 路由生成的类型占位，为 POST 处理器提供 Kit 约定类型。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "api-handler"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/types/src/routes/auth/$types.d.ts",
+      "type": "file",
+      "name": "$types.d.ts",
+      "filePath": ".svelte-kit/types/src/routes/auth/$types.d.ts",
+      "summary": "SvelteKit 为 /auth 登录注册页生成的页面与布局类型声明。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "路由类型"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/types/src/routes/shop/$types.d.ts",
+      "type": "file",
+      "name": "$types.d.ts",
+      "filePath": ".svelte-kit/types/src/routes/shop/$types.d.ts",
+      "summary": "SvelteKit 为商店页 /shop 生成的路由类型声明。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "路由类型"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/types/src/routes/shop/sent/$types.d.ts",
+      "type": "file",
+      "name": "$types.d.ts",
+      "filePath": ".svelte-kit/types/src/routes/shop/sent/$types.d.ts",
+      "summary": "SvelteKit 为代寄/邮路测试页 /shop/sent 生成的路由类型声明。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "路由类型"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.svelte-kit/types/src/routes/userspace/$types.d.ts",
+      "type": "file",
+      "name": "$types.d.ts",
+      "filePath": ".svelte-kit/types/src/routes/userspace/$types.d.ts",
+      "summary": "SvelteKit 为个人中心 /userspace 生成的路由类型声明。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "generated",
+        "路由类型"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "知识图谱分析忽略规则，列出可排除的生成目录、脚本与测试文件模式。",
+      "tags": [
+        "configuration",
+        "分析工具",
+        "ignore",
+        "知识图谱"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.understand-anything/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".understand-anything/config.json",
+      "summary": "Understand Anything 配置，指定知识图谱文本输出语言为中文。",
+      "tags": [
+        "configuration",
+        "知识图谱",
+        "i18n",
+        "分析工具"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:CI/CD手册",
+      "type": "file",
+      "name": "CD手册",
+      "filePath": "CI/CD手册",
+      "summary": "GitHub Actions + Docker + GHCR 部署手册，说明 Secrets、Dockerfile 与远程 SSH 发布流程。",
+      "tags": [
+        "documentation",
+        "ci-cd",
+        "deployment",
+        "docker",
+        "指南"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/build-tailwind.js",
+      "type": "file",
+      "name": "build-tailwind.js",
+      "filePath": "scripts/build-tailwind.js",
+      "summary": "用 PostCSS 与 @tailwindcss/postcss 编译 src/app.css，把结果写入根目录 temp-out.css 的调试脚本。",
+      "tags": [
+        "script",
+        "tailwind",
+        "build-system",
+        "调试"
+      ],
+      "complexity": "simple",
+      "languageNotes": "仍按 Tailwind v3 的 PostCSS 插件路径编译，与当前 Vite 插件方案并存，属于调试残留。"
+    },
+    {
+      "id": "file:src/app.css",
+      "type": "file",
+      "name": "app.css",
+      "filePath": "src/app.css",
+      "summary": "全局样式入口，通过 @import \"tailwindcss\" 启用 Tailwind CSS v4 的 CSS-first 配置。",
+      "tags": [
+        "stylesheet",
+        "tailwind",
+        "entry-point",
+        "markup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app.d.ts",
+      "type": "file",
+      "name": "app.d.ts",
+      "filePath": "src/app.d.ts",
+      "summary": "SvelteKit App 命名空间类型扩展占位，Error/Locals/PageData 等接口尚未启用。",
+      "tags": [
+        "type-definition",
+        "sveltekit",
+        "ambient",
+        "类型扩展"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/app.html",
+      "type": "file",
+      "name": "app.html",
+      "filePath": "src/app.html",
+      "summary": "SvelteKit HTML 壳，插入 %sveltekit.head% 与 %sveltekit.body%，并开启 hover 预加载。",
+      "tags": [
+        "entry-point",
+        "html",
+        "sveltekit",
+        "markup"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/Footer.svelte",
+      "type": "file",
+      "name": "Footer.svelte",
+      "filePath": "src/lib/Footer.svelte",
+      "summary": "站点页脚组件，展示品牌、服务/收藏/帮助链接、备案信息与代寄服务状态。",
+      "tags": [
+        "component",
+        "ui",
+        "footer",
+        "品牌"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "src/lib/index.ts",
+      "summary": "$lib 目录占位 barrel，提醒将可复用模块放到该文件夹以通过别名导入。",
+      "tags": [
+        "barrel",
+        "utility",
+        "sveltekit",
+        "占位"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/Navbar.svelte",
+      "type": "file",
+      "name": "Navbar.svelte",
+      "filePath": "src/lib/Navbar.svelte",
+      "summary": "顶栏导航：链接到关于/商店/代寄/联系页，并根据 auth store 显示登录入口或用户菜单。",
+      "tags": [
+        "component",
+        "ui",
+        "navigation",
+        "auth",
+        "entry-point"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/lib/server/db.ts",
+      "type": "file",
+      "name": "db.ts",
+      "filePath": "src/lib/server/db.ts",
+      "summary": "服务端 SQLite 入口：按 DATABASE_PATH 打开 better-sqlite3，并确保 users 表存在后导出连接。",
+      "tags": [
+        "data-model",
+        "sqlite",
+        "service",
+        "singleton",
+        "server-only"
+      ],
+      "complexity": "simple",
+      "languageNotes": "SvelteKit $lib/server 约定保证该模块只在服务端加载，避免把数据库驱动打进客户端。"
+    },
+    {
+      "id": "table:src/lib/server/db.ts:users",
+      "type": "table",
+      "name": "users",
+      "filePath": "src/lib/server/db.ts",
+      "summary": "用户表：主键 id、唯一用户名、可选邮箱、密码哈希与创建时间。",
+      "tags": [
+        "database",
+        "schema",
+        "users",
+        "sqlite"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/stores/auth.ts",
+      "type": "file",
+      "name": "auth.ts",
+      "filePath": "src/lib/stores/auth.ts",
+      "summary": "客户端认证 store：把 user/token 写入 localStorage，并提供 login、logout 与 initialize。",
+      "tags": [
+        "store",
+        "auth",
+        "state",
+        "localStorage"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "用 writable store 工厂封装订阅与命令式 login/logout，并用 $app/environment 的 browser 守卫 SSR。"
+    },
+    {
+      "id": "function:src/lib/stores/auth.ts:createAuthStore",
+      "type": "function",
+      "name": "createAuthStore",
+      "filePath": "src/lib/stores/auth.ts",
+      "lineRange": [
+        10,
+        55
+      ],
+      "summary": "创建带 subscribe/login/logout/initialize 的认证 store，在浏览器中同步 localStorage。",
+      "tags": [
+        "factory",
+        "auth",
+        "store",
+        "state"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/routes/+layout.svelte",
+      "type": "file",
+      "name": "+layout.svelte",
+      "filePath": "src/routes/+layout.svelte",
+      "summary": "根布局：导入全局 CSS、设置 favicon，并用 Svelte 5 $props 渲染子路由。",
+      "tags": [
+        "layout",
+        "entry-point",
+        "sveltekit",
+        "component"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Svelte 5 runes：$props() 解构 children，并以 {@render children()} 插槽渲染。"
+    },
+    {
+      "id": "file:src/routes/+page.svelte",
+      "type": "file",
+      "name": "+page.svelte",
+      "filePath": "src/routes/+page.svelte",
+      "summary": "首页仍是 SvelteKit 默认欢迎文案，尚未替换为收藏品店落地页。",
+      "tags": [
+        "page",
+        "placeholder",
+        "entry-point",
+        "sveltekit"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/routes/about/+page.svelte",
+      "type": "file",
+      "name": "+page.svelte",
+      "filePath": "src/routes/about/+page.svelte",
+      "summary": "关于我们页：介绍高木桑收藏品店使命，并组合 Navbar 与 Footer。",
+      "tags": [
+        "page",
+        "component",
+        "marketing",
+        "about"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/routes/about/contact/+page.svelte",
+      "type": "file",
+      "name": "+page.svelte",
+      "filePath": "src/routes/about/contact/+page.svelte",
+      "summary": "联系我们路由占位文件，页面内容尚未实现。",
+      "tags": [
+        "page",
+        "placeholder",
+        "contact",
+        "sveltekit"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/routes/api/auth/login/+server.ts",
+      "type": "file",
+      "name": "+server.ts",
+      "filePath": "src/routes/api/auth/login/+server.ts",
+      "summary": "登录 API：按用户名查 SQLite，用 bcrypt 校验密码后签发 1 小时 JWT。",
+      "tags": [
+        "api-handler",
+        "auth",
+        "jwt",
+        "endpoint"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/routes/api/auth/login/+server.ts:POST",
+      "type": "function",
+      "name": "POST",
+      "filePath": "src/routes/api/auth/login/+server.ts",
+      "lineRange": [
+        16,
+        57
+      ],
+      "summary": "处理登录 POST：校验凭证、比对密码哈希并返回 token 与用户信息。",
+      "tags": [
+        "api-handler",
+        "auth",
+        "jwt",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:src/routes/api/auth/login/+server.ts:POST-/api/auth/login",
+      "type": "endpoint",
+      "name": "POST /api/auth/login",
+      "filePath": "src/routes/api/auth/login/+server.ts",
+      "summary": "登录端点，成功时返回 JWT 与用户对象，失败返回 400/401/500。",
+      "tags": [
+        "endpoint",
+        "auth",
+        "rest",
+        "jwt"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/routes/api/auth/logout/+server.ts",
+      "type": "file",
+      "name": "+server.ts",
+      "filePath": "src/routes/api/auth/logout/+server.ts",
+      "summary": "登出 API：删除 session_user cookie。客户端实际登录态主要存在 localStorage。",
+      "tags": [
+        "api-handler",
+        "auth",
+        "endpoint",
+        "session"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/routes/api/auth/logout/+server.ts:POST",
+      "type": "function",
+      "name": "POST",
+      "filePath": "src/routes/api/auth/logout/+server.ts",
+      "lineRange": [
+        4,
+        7
+      ],
+      "summary": "删除 session_user cookie 并返回登出成功 JSON。",
+      "tags": [
+        "api-handler",
+        "auth",
+        "cookie"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "endpoint:src/routes/api/auth/logout/+server.ts:POST-/api/auth/logout",
+      "type": "endpoint",
+      "name": "POST /api/auth/logout",
+      "filePath": "src/routes/api/auth/logout/+server.ts",
+      "summary": "服务端登出端点，清理 cookie；与客户端 auth.logout 并非同一存储。",
+      "tags": [
+        "endpoint",
+        "auth",
+        "rest",
+        "session"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/routes/api/auth/register/+server.ts",
+      "type": "file",
+      "name": "+server.ts",
+      "filePath": "src/routes/api/auth/register/+server.ts",
+      "summary": "注册 API：检查用户名唯一后，用 bcrypt 哈希密码并以 UUID 写入 users 表。",
+      "tags": [
+        "api-handler",
+        "auth",
+        "validation",
+        "endpoint"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/routes/api/auth/register/+server.ts:POST",
+      "type": "function",
+      "name": "POST",
+      "filePath": "src/routes/api/auth/register/+server.ts",
+      "lineRange": [
+        7,
+        40
+      ],
+      "summary": "处理注册 POST：拒绝重复用户名，哈希密码并插入新用户。",
+      "tags": [
+        "api-handler",
+        "auth",
+        "validation",
+        "sqlite"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "endpoint:src/routes/api/auth/register/+server.ts:POST-/api/auth/register",
+      "type": "endpoint",
+      "name": "POST /api/auth/register",
+      "filePath": "src/routes/api/auth/register/+server.ts",
+      "summary": "注册端点，创建用户后返回 201 与 userId；用户名冲突返回 409。",
+      "tags": [
+        "endpoint",
+        "auth",
+        "rest",
+        "users"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/routes/auth/+page.svelte",
+      "type": "file",
+      "name": "+page.svelte",
+      "filePath": "src/routes/auth/+page.svelte",
+      "summary": "登录/注册页：3D 翻转动画切换表单，调用 /api/auth/login 与 /api/auth/register，成功后写入 auth store。",
+      "tags": [
+        "page",
+        "auth",
+        "component",
+        "api-handler",
+        "entry-point"
+      ],
+      "complexity": "complex",
+      "languageNotes": "页面脚本用 fetch 直连 SvelteKit API routes；登录字段名为 loginEmail，但实际作为 username 提交。"
+    },
+    {
+      "id": "function:src/routes/auth/+page.svelte:handleLogin",
+      "type": "function",
+      "name": "handleLogin",
+      "filePath": "src/routes/auth/+page.svelte",
+      "lineRange": [
+        77,
+        124
+      ],
+      "summary": "提交登录表单，POST /api/auth/login，成功后调用 auth.login 并按 from 参数跳转。",
+      "tags": [
+        "auth",
+        "event-handler",
+        "validation",
+        "api-handler"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/routes/auth/+page.svelte:handleRegister",
+      "type": "function",
+      "name": "handleRegister",
+      "filePath": "src/routes/auth/+page.svelte",
+      "lineRange": [
+        127,
+        187
+      ],
+      "summary": "校验注册表单后 POST /api/auth/register，成功则切回登录视图。",
+      "tags": [
+        "auth",
+        "event-handler",
+        "validation",
+        "api-handler"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/routes/auth/+page.svelte:switchMode",
+      "type": "function",
+      "name": "switchMode",
+      "filePath": "src/routes/auth/+page.svelte",
+      "lineRange": [
+        39,
+        56
+      ],
+      "summary": "用翻出/翻入动画在登录与注册模式之间切换，并清空提示状态。",
+      "tags": [
+        "ui",
+        "animation",
+        "event-handler"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/routes/shop/+page.svelte",
+      "type": "file",
+      "name": "+page.svelte",
+      "filePath": "src/routes/shop/+page.svelte",
+      "summary": "精选商店路由占位，文件为空，导航已指向该路径。",
+      "tags": [
+        "page",
+        "placeholder",
+        "shop",
+        "sveltekit"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/routes/shop/sent/+page.svelte",
+      "type": "file",
+      "name": "+page.svelte",
+      "filePath": "src/routes/shop/sent/+page.svelte",
+      "summary": "代寄/邮路测试路由占位，文件为空，尚未实现下单或追踪。",
+      "tags": [
+        "page",
+        "placeholder",
+        "shop",
+        "sveltekit"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/routes/userspace/+page.svelte",
+      "type": "file",
+      "name": "+page.svelte",
+      "filePath": "src/routes/userspace/+page.svelte",
+      "summary": "个人中心路由占位，Navbar 用户菜单已链接到此页。",
+      "tags": [
+        "page",
+        "placeholder",
+        "userspace",
+        "auth"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:static/robots.txt",
+      "type": "document",
+      "name": "robots.txt",
+      "filePath": "static/robots.txt",
+      "summary": "允许所有爬虫抓取站点，未设置 Disallow 规则。",
+      "tags": [
+        "documentation",
+        "seo",
+        "robots",
+        "static"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:svelte.config.js",
+      "type": "file",
+      "name": "svelte.config.js",
+      "filePath": "svelte.config.js",
+      "summary": "SvelteKit 配置：vitePreprocess 与 adapter-auto，默认输出到 build 目录。",
+      "tags": [
+        "configuration",
+        "sveltekit",
+        "build-system",
+        "adapter"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tailwind.config.cjs",
+      "type": "file",
+      "name": "tailwind.config.cjs",
+      "filePath": "tailwind.config.cjs",
+      "summary": "遗留的 Tailwind v3 风格配置，声明 content/purge 扫描 src；实际样式由 Vite 插件驱动。",
+      "tags": [
+        "configuration",
+        "tailwind",
+        "build-system",
+        "legacy"
+      ],
+      "complexity": "simple",
+      "languageNotes": "v4 推荐 CSS-first + @tailwindcss/vite；此 CJS 文件是调试期留下的兼容配置。"
+    },
+    {
+      "id": "file:vite.config.ts",
+      "type": "file",
+      "name": "vite.config.ts",
+      "filePath": "vite.config.ts",
+      "summary": "Vite 入口：启用 @tailwindcss/vite 与 sveltekit 插件，驱动开发服务器与生产构建。",
+      "tags": [
+        "configuration",
+        "vite",
+        "entry-point",
+        "build-system",
+        "tailwind"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "service:Dockerfile",
+      "target": "service:Dockerfile:builder",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "service:Dockerfile",
+      "target": "service:Dockerfile:node",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "service:Dockerfile:node",
+      "target": "service:Dockerfile:builder",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "pipeline:.github/workflows/core-check.yml",
+      "target": "pipeline:.github/workflows/deploy-dokploy.yml",
+      "type": "triggers",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "pipeline:.github/workflows/deploy-dokploy.yml",
+      "target": "pipeline:.github/workflows/core-check.yml",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:src/app.html",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:src/routes/+layout.svelte",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:vite.config.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:svelte.config.js",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "config:package.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:vite.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:svelte.config.js",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:package.json",
+      "target": "config:tsconfig.json",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:tsconfig.json",
+      "target": "file:vite.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:tsconfig.json",
+      "target": "file:src/routes/+layout.svelte",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:temp-out.css",
+      "target": "file:vite.config.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tmp_root.html",
+      "target": "file:src/app.html",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:项目配置debug报告.md",
+      "target": "file:vite.config.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:项目配置debug报告.md",
+      "target": "config:package.json",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:项目配置debug报告.md",
+      "target": "file:temp-out.css",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:.svelte-kit/generated/root.js",
+      "target": "file:.svelte-kit/generated/root.svelte",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:.svelte-kit/generated/server/internal.js",
+      "target": "file:.svelte-kit/generated/root.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:.svelte-kit/generated/server/internal.js",
+      "target": "file:.svelte-kit/generated/shared/error-template.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:.svelte-kit/generated/server/internal.js",
+      "target": "function:.svelte-kit/generated/server/internal.js:get_hooks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:.svelte-kit/generated/server/internal.js",
+      "target": "function:.svelte-kit/generated/server/internal.js:get_hooks",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/client/matchers.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/client/nodes/0.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/client/nodes/1.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/client/nodes/2.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/client/nodes/3.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/client/nodes/4.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/client/nodes/5.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/client/nodes/6.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/client/nodes/7.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/client/nodes/8.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/root.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:.svelte-kit/generated/client/app.js",
+      "target": "file:.svelte-kit/generated/shared/error-template.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.svelte-kit/tsconfig.json",
+      "target": "file:.svelte-kit/ambient.d.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.svelte-kit/tsconfig.json",
+      "target": "file:.svelte-kit/env.d.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.svelte-kit/tsconfig.json",
+      "target": "file:.svelte-kit/non-ambient.d.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.svelte-kit/tsconfig.json",
+      "target": "file:.svelte-kit/types/src/routes/$types.d.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.svelte-kit/tsconfig.json",
+      "target": "file:.svelte-kit/types/src/routes/about/$types.d.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.svelte-kit/tsconfig.json",
+      "target": "file:.svelte-kit/types/src/routes/about/contact/$types.d.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.svelte-kit/tsconfig.json",
+      "target": "file:.svelte-kit/types/src/routes/api/auth/login/$types.d.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.svelte-kit/types/route_meta_data.json",
+      "target": "file:.svelte-kit/types/src/routes/$types.d.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.svelte-kit/types/route_meta_data.json",
+      "target": "file:.svelte-kit/types/src/routes/about/$types.d.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.svelte-kit/types/route_meta_data.json",
+      "target": "file:.svelte-kit/types/src/routes/about/contact/$types.d.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.svelte-kit/types/route_meta_data.json",
+      "target": "file:.svelte-kit/types/src/routes/api/auth/login/$types.d.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/lib/server/db.ts",
+      "target": "table:src/lib/server/db.ts:users",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/server/db.ts",
+      "target": "table:src/lib/server/db.ts:users",
+      "type": "defines_schema",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/stores/auth.ts",
+      "target": "function:src/lib/stores/auth.ts:createAuthStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/stores/auth.ts",
+      "target": "function:src/lib/stores/auth.ts:createAuthStore",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/routes/api/auth/login/+server.ts",
+      "target": "function:src/routes/api/auth/login/+server.ts:POST",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/routes/api/auth/login/+server.ts",
+      "target": "function:src/routes/api/auth/login/+server.ts:POST",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/routes/api/auth/login/+server.ts",
+      "target": "endpoint:src/routes/api/auth/login/+server.ts:POST-/api/auth/login",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/routes/api/auth/login/+server.ts",
+      "target": "file:src/lib/server/db.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "function:src/routes/api/auth/login/+server.ts:POST",
+      "target": "table:src/lib/server/db.ts:users",
+      "type": "reads_from",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/routes/api/auth/logout/+server.ts",
+      "target": "function:src/routes/api/auth/logout/+server.ts:POST",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/routes/api/auth/logout/+server.ts",
+      "target": "function:src/routes/api/auth/logout/+server.ts:POST",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/routes/api/auth/logout/+server.ts",
+      "target": "endpoint:src/routes/api/auth/logout/+server.ts:POST-/api/auth/logout",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/routes/api/auth/register/+server.ts",
+      "target": "function:src/routes/api/auth/register/+server.ts:POST",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/routes/api/auth/register/+server.ts",
+      "target": "function:src/routes/api/auth/register/+server.ts:POST",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/routes/api/auth/register/+server.ts",
+      "target": "endpoint:src/routes/api/auth/register/+server.ts:POST-/api/auth/register",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/routes/api/auth/register/+server.ts",
+      "target": "file:src/lib/server/db.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "function:src/routes/api/auth/register/+server.ts:POST",
+      "target": "table:src/lib/server/db.ts:users",
+      "type": "writes_to",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/lib/Navbar.svelte",
+      "target": "file:src/lib/stores/auth.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/lib/Navbar.svelte",
+      "target": "file:src/routes/auth/+page.svelte",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/lib/Navbar.svelte",
+      "target": "file:src/routes/userspace/+page.svelte",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/routes/+layout.svelte",
+      "target": "file:src/app.css",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/routes/about/+page.svelte",
+      "target": "file:src/lib/Navbar.svelte",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/routes/about/+page.svelte",
+      "target": "file:src/lib/Footer.svelte",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/routes/about/+page.svelte",
+      "target": "file:src/routes/about/contact/+page.svelte",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/app.html",
+      "target": "file:src/routes/+layout.svelte",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/build-tailwind.js",
+      "target": "file:src/app.css",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:scripts/build-tailwind.js",
+      "target": "file:temp-out.css",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:CI/CD手册",
+      "target": "service:Dockerfile",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:CI/CD手册",
+      "target": "pipeline:.github/workflows/core-check.yml",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:CI/CD手册",
+      "target": "pipeline:.github/workflows/deploy-dokploy.yml",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.understand-anything/config.json",
+      "target": "file:.understand-anything/.understandignore",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:.svelte-kit/types/src/routes/api/auth/logout/$types.d.ts",
+      "target": "file:src/routes/api/auth/logout/+server.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:.svelte-kit/types/src/routes/api/auth/register/$types.d.ts",
+      "target": "file:src/routes/api/auth/register/+server.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:.svelte-kit/types/src/routes/auth/$types.d.ts",
+      "target": "file:src/routes/auth/+page.svelte",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:.svelte-kit/types/src/routes/shop/$types.d.ts",
+      "target": "file:src/routes/shop/+page.svelte",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:.svelte-kit/types/src/routes/shop/sent/$types.d.ts",
+      "target": "file:src/routes/shop/sent/+page.svelte",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:.svelte-kit/types/src/routes/userspace/$types.d.ts",
+      "target": "file:src/routes/userspace/+page.svelte",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/routes/auth/+page.svelte",
+      "target": "function:src/routes/auth/+page.svelte:handleLogin",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/routes/auth/+page.svelte",
+      "target": "function:src/routes/auth/+page.svelte:handleRegister",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/routes/auth/+page.svelte",
+      "target": "function:src/routes/auth/+page.svelte:switchMode",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/routes/auth/+page.svelte",
+      "target": "file:src/lib/Navbar.svelte",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/routes/auth/+page.svelte",
+      "target": "file:src/lib/Footer.svelte",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/routes/auth/+page.svelte",
+      "target": "file:src/lib/stores/auth.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "function:src/routes/auth/+page.svelte:handleLogin",
+      "target": "file:src/routes/api/auth/login/+server.ts",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/routes/auth/+page.svelte:handleRegister",
+      "target": "file:src/routes/api/auth/register/+server.ts",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/routes/auth/+page.svelte:handleLogin",
+      "target": "endpoint:src/routes/api/auth/login/+server.ts:POST-/api/auth/login",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/routes/auth/+page.svelte:handleRegister",
+      "target": "endpoint:src/routes/api/auth/register/+server.ts:POST-/api/auth/register",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/routes/auth/+page.svelte",
+      "target": "file:src/routes/shop/+page.svelte",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:svelte.config.js",
+      "target": "file:src/routes/+layout.svelte",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:svelte.config.js",
+      "target": "file:src/app.html",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:vite.config.ts",
+      "target": "file:svelte.config.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:vite.config.ts",
+      "target": "file:src/app.css",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:tailwind.config.cjs",
+      "target": "file:src/app.css",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:tailwind.config.cjs",
+      "target": "file:src/routes/+layout.svelte",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:static/robots.txt",
+      "target": "file:src/app.html",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/routes/shop/+page.svelte",
+      "target": "file:src/routes/shop/sent/+page.svelte",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/routes/userspace/+page.svelte",
+      "target": "file:src/lib/stores/auth.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:ui",
+      "name": "UI 层",
+      "description": "SvelteKit 页面、布局与共享组件，构成高木桑收藏品店的浏览器界面。",
+      "nodeIds": [
+        "file:src/app.css",
+        "file:src/app.html",
+        "file:src/lib/Footer.svelte",
+        "file:src/lib/Navbar.svelte",
+        "file:src/routes/+layout.svelte",
+        "file:src/routes/+page.svelte",
+        "file:src/routes/about/+page.svelte",
+        "file:src/routes/about/contact/+page.svelte",
+        "file:src/routes/auth/+page.svelte",
+        "file:src/routes/shop/+page.svelte",
+        "file:src/routes/shop/sent/+page.svelte",
+        "file:src/routes/userspace/+page.svelte"
+      ]
+    },
+    {
+      "id": "layer:api",
+      "name": "API 层",
+      "description": "认证相关 SvelteKit server routes，提供登录、注册与登出 REST 端点。",
+      "nodeIds": [
+        "file:src/routes/api/auth/login/+server.ts",
+        "endpoint:src/routes/api/auth/login/+server.ts:POST-/api/auth/login",
+        "file:src/routes/api/auth/logout/+server.ts",
+        "endpoint:src/routes/api/auth/logout/+server.ts:POST-/api/auth/logout",
+        "file:src/routes/api/auth/register/+server.ts",
+        "endpoint:src/routes/api/auth/register/+server.ts:POST-/api/auth/register"
+      ]
+    },
+    {
+      "id": "layer:data",
+      "name": "数据层",
+      "description": "SQLite 用户表与客户端 auth store，分别保存服务端账号和浏览器登录态。",
+      "nodeIds": [
+        "file:src/lib/server/db.ts",
+        "table:src/lib/server/db.ts:users",
+        "file:src/lib/stores/auth.ts"
+      ]
+    },
+    {
+      "id": "layer:config",
+      "name": "配置层",
+      "description": "包管理、TypeScript、Vite、SvelteKit 与 Tailwind 的构建与运行配置。",
+      "nodeIds": [
+        "config:package.json",
+        "config:tsconfig.json",
+        "file:.npmrc",
+        "file:svelte.config.js",
+        "file:tailwind.config.cjs",
+        "file:vite.config.ts",
+        "file:src/app.d.ts",
+        "file:src/lib/index.ts"
+      ]
+    },
+    {
+      "id": "layer:infrastructure",
+      "name": "基础设施",
+      "description": "多阶段 Docker 镜像与 GitHub Actions 质量检查、Dokploy 部署流水线。",
+      "nodeIds": [
+        "service:Dockerfile",
+        "service:Dockerfile:builder",
+        "service:Dockerfile:node",
+        "pipeline:.github/workflows/core-check.yml",
+        "pipeline:.github/workflows/deploy-dokploy.yml"
+      ]
+    },
+    {
+      "id": "layer:documentation",
+      "name": "文档层",
+      "description": "项目入门 README、Tailwind 配置复盘、CI/CD 手册与爬虫规则。",
+      "nodeIds": [
+        "document:README.md",
+        "document:项目配置debug报告.md",
+        "file:CI/CD手册",
+        "document:static/robots.txt"
+      ]
+    },
+    {
+      "id": "layer:generated",
+      "name": "生成产物",
+      "description": "SvelteKit sync 生成的客户端清单、路由节点与 TypeScript 类型，不属于手写业务代码。",
+      "nodeIds": [
+        "file:.svelte-kit/ambient.d.ts",
+        "file:.svelte-kit/env.d.ts",
+        "file:.svelte-kit/generated/client/app.js",
+        "file:.svelte-kit/generated/client/matchers.js",
+        "file:.svelte-kit/generated/client/nodes/0.js",
+        "file:.svelte-kit/generated/client/nodes/1.js",
+        "file:.svelte-kit/generated/client/nodes/2.js",
+        "file:.svelte-kit/generated/client/nodes/3.js",
+        "file:.svelte-kit/generated/client/nodes/4.js",
+        "file:.svelte-kit/generated/client/nodes/5.js",
+        "file:.svelte-kit/generated/client/nodes/6.js",
+        "file:.svelte-kit/generated/client/nodes/7.js",
+        "file:.svelte-kit/generated/client/nodes/8.js",
+        "file:.svelte-kit/generated/root.js",
+        "file:.svelte-kit/generated/root.svelte",
+        "file:.svelte-kit/generated/server/internal.js",
+        "file:.svelte-kit/generated/shared/error-template.js",
+        "file:.svelte-kit/non-ambient.d.ts",
+        "config:.svelte-kit/tsconfig.json",
+        "config:.svelte-kit/types/route_meta_data.json",
+        "file:.svelte-kit/types/src/routes/$types.d.ts",
+        "file:.svelte-kit/types/src/routes/about/$types.d.ts",
+        "file:.svelte-kit/types/src/routes/about/contact/$types.d.ts",
+        "file:.svelte-kit/types/src/routes/api/auth/login/$types.d.ts",
+        "file:.svelte-kit/types/src/routes/api/auth/logout/$types.d.ts",
+        "file:.svelte-kit/types/src/routes/api/auth/register/$types.d.ts",
+        "file:.svelte-kit/types/src/routes/auth/$types.d.ts",
+        "file:.svelte-kit/types/src/routes/shop/$types.d.ts",
+        "file:.svelte-kit/types/src/routes/shop/sent/$types.d.ts",
+        "file:.svelte-kit/types/src/routes/userspace/$types.d.ts"
+      ]
+    },
+    {
+      "id": "layer:tooling",
+      "name": "工具与调试",
+      "description": "知识图谱分析配置、Tailwind 调试脚本以及临时编译残留。",
+      "nodeIds": [
+        "file:.understand-anything/.understandignore",
+        "config:.understand-anything/config.json",
+        "file:scripts/build-tailwind.js",
+        "file:temp-out.css",
+        "file:tmp_root.html"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "项目概览",
+      "description": "从 README 与 package.json 开始：这是用 sv 脚手架生成的 SvelteKit 应用，业务上是高木桑收藏品店。依赖里已有 SQLite、JWT、bcrypt 与 Tailwind v4，脚本覆盖开发、构建与类型检查。",
+      "nodeIds": [
+        "document:README.md",
+        "config:package.json"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "应用入口",
+      "description": "浏览器先加载 src/app.html 壳，再进入根布局。+layout.svelte 引入全局 CSS 和 favicon，用 Svelte 5 的 children 插槽渲染各页面。首页目前仍是默认欢迎文案。",
+      "nodeIds": [
+        "file:src/app.html",
+        "file:src/routes/+layout.svelte",
+        "file:src/routes/+page.svelte"
+      ],
+      "languageLesson": "Svelte 5 用 $props() 接收 children，并以 {@render children()} 渲染，而不是旧版 <slot />。"
+    },
+    {
+      "order": 3,
+      "title": "界面骨架",
+      "description": "Navbar 与 Footer 是共享 UI。导航指向关于、商店、代寄和联系页，并根据 auth store 显示登录按钮或用户菜单。Footer 承载品牌、备案与代寄状态。关于页已经把这两块组装成完整营销页。",
+      "nodeIds": [
+        "file:src/lib/Navbar.svelte",
+        "file:src/lib/Footer.svelte",
+        "file:src/routes/about/+page.svelte"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "认证页面",
+      "description": " /auth 是目前最完整的业务页：登录/注册 3D 翻转、密码强度、表单校验，然后 fetch 调用后端 API。成功登录会写入 auth store 并按 from 参数跳转。商店、代寄和个人中心仍是空路由。",
+      "nodeIds": [
+        "file:src/routes/auth/+page.svelte",
+        "file:src/routes/shop/+page.svelte",
+        "file:src/routes/userspace/+page.svelte"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "认证 API",
+      "description": "三条 SvelteKit +server.ts 构成认证后端。注册用 UUID+bcrypt 写入用户表；登录比对哈希后签发 1 小时 JWT；登出只删 cookie，和客户端 localStorage 登录态并不完全一致。",
+      "nodeIds": [
+        "file:src/routes/api/auth/register/+server.ts",
+        "file:src/routes/api/auth/login/+server.ts",
+        "file:src/routes/api/auth/logout/+server.ts"
+      ],
+      "languageLesson": "SvelteKit 约定：routes/api/**/+server.ts 导出 GET/POST 等函数即成为 HTTP 端点，无需单独注册路由表。"
+    },
+    {
+      "order": 6,
+      "title": "数据与会话",
+      "description": "db.ts 在服务端打开 better-sqlite3，并 CREATE TABLE IF NOT EXISTS users。auth store 则在浏览器用 localStorage 保存 token 与用户信息。两端存储策略不同，这是阅读认证流程时的关键分叉。",
+      "nodeIds": [
+        "file:src/lib/server/db.ts",
+        "table:src/lib/server/db.ts:users",
+        "file:src/lib/stores/auth.ts"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "构建配置",
+      "description": "vite.config.ts 同时挂上 Tailwind v4 Vite 插件和 sveltekit。svelte.config.js 使用 adapter-auto，输出到 build。tsconfig 继承 .svelte-kit 生成配置。项目配置 debug 报告记录了 Tailwind v3/v4 混用曾导致样式失效。",
+      "nodeIds": [
+        "file:vite.config.ts",
+        "file:svelte.config.js",
+        "config:tsconfig.json",
+        "document:项目配置debug报告.md"
+      ],
+      "languageLesson": "Tailwind v4 以 @import \"tailwindcss\" 和 @tailwindcss/vite 为主；旧的 tailwind.config.cjs 与 PostCSS 脚本是调试残留。"
+    },
+    {
+      "order": 8,
+      "title": "容器化部署",
+      "description": "Dockerfile 分 builder 与生产两阶段：先编译 better-sqlite3 并 npm run build，再拷贝 build 产物，设置 DATABASE_PATH=/app/data/database.sqlite，以 node build 监听 3000。",
+      "nodeIds": [
+        "service:Dockerfile",
+        "service:Dockerfile:builder",
+        "service:Dockerfile:node"
+      ],
+      "languageLesson": "多阶段构建把 python3/make/g++ 留在 builder，生产镜像只保留 sqlite3 运行时，体积更小。"
+    },
+    {
+      "order": 9,
+      "title": "CI/CD 流水线",
+      "description": "push/PR 触发 Core Check（组织级 web-check）；检查与 CodeQL 成功后，Dokploy workflow 部署到 https://tkgsan.cn/。CI/CD 手册补充了 GHCR 与 SSH 发布的通用步骤。",
+      "nodeIds": [
+        "pipeline:.github/workflows/core-check.yml",
+        "pipeline:.github/workflows/deploy-dokploy.yml",
+        "file:CI/CD手册"
+      ],
+      "languageLesson": "GitHub Actions 的 workflow_run 把质量检查和部署串成门禁：只有 conclusion == success 才发布。"
+    }
+  ]
+}

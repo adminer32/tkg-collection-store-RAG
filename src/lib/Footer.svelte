@@ -2,9 +2,24 @@
   // ── 可覆盖 slot 内容，或直接使用默认样式 ──────────────────────────────────
 
   const colLinks = [
-    { title: '服务', links: ['明信片代寄', '邮票零售', '信件定制', '礼盒套装'] },
-    { title: '收藏', links: ['日本系列', '欧洲系列', '复古系列', '限量珍藏'] },
-    { title: '帮助', links: ['常见问题', '邮路追踪', '联系我们', '服务条款'] },
+    { title: '服务', links: [
+      { text: '明信片代寄', href: '/shop/sent?service=postcard-forward' },
+      { text: '邮票零售', href: '/shop' },
+      { text: '信件定制', href: '/shop/sent?addon=letter-custom' },
+      { text: '礼盒套装', href: '/shop/sent?addon=gift-box' },
+    ] },
+    { title: '收藏', links: [
+      { text: '日本系列', href: '/shop' },
+      { text: '欧洲系列', href: '/shop' },
+      { text: '复古系列', href: '/shop' },
+      { text: '限量珍藏', href: '/shop' },
+    ] },
+    { title: '帮助', links: [
+      { text: '店员助手', href: '/shop#assistant' },
+      { text: '邮路测试', href: '/shop/sent?service=mail-route-test' },
+      { text: '联系我们', href: '/about/contact' },
+      { text: '个人中心', href: '/userspace' },
+    ] },
   ];
 
   const socials = ['微博', '微信', '小红书', 'B站'];
@@ -62,7 +77,7 @@
           <ul class="space-y-2">
             {#each col.links as lnk}
               <li>
-                <a href="#link" class="footer-link">{lnk}</a>
+                <a href={lnk.href} class="footer-link">{lnk.text}</a>
               </li>
             {/each}
           </ul>

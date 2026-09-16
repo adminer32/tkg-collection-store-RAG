@@ -1,11 +1,14 @@
-import { json } from "@sveltejs/kit";
-// @ts-ignore
-import db from "$lib/server/db";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { env } from "$env/dynamic/private";
+import { json } from '@sveltejs/kit';
+import db from '$lib/server/db';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from '$lib/server/auth';
 
-const JWT_SECRET = env.JWT_SECRET || "TAKAGISANWAKAWAIIDESU520";
+type UserRow = {
+  id: string;
+  username: string;
+  password_hash: string;
+};
 
 export async function POST({ request }) {
   const { username, password } = await request.json();
@@ -17,7 +20,7 @@ export async function POST({ request }) {
   try {
     const user = db
       .prepare("SELECT * FROM users WHERE username = ?")
-      .get(username);
+      .get(username) as UserRow | undefined;
 
     if (!user) {
       return json({ error: "Invalid username or password" }, { status: 401 });

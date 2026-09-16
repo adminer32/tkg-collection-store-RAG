@@ -9,13 +9,20 @@
   let showUserMenu = false;
 
   const navLinks = [
+    { href: '/', text: '首页' },
     { href: '/about', text: '关于我们' },
     { href: '/shop', text: '精选商店' },
+    { href: '/shop#assistant', text: '店员助手' },
     { href: '/shop/sent', text: '代寄/邮路测试' },
     { href: '/about/contact', text: '联系我们' },
   ];
 
-  function handleLogout() {
+  async function handleLogout() {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch {
+      /* local logout still proceeds */
+    }
     auth.logout();
     showUserMenu = false;
     goto('/');
@@ -93,9 +100,9 @@
                   <span class="text-lg">👤</span>
                   个人中心
                 </a>
-                <a href="/shop/orders" class="menu-item" on:click={() => showUserMenu = false}>
+                <a href="/userspace" class="menu-item" on:click={() => showUserMenu = false}>
                   <span class="text-lg">📦</span>
-                  我的订单
+                  我的申请
                 </a>
                 <div class="h-px bg-slate-100 my-1 mx-2"></div>
                 <button class="menu-item text-rose-500 hover:bg-rose-50!" on:click={handleLogout}>

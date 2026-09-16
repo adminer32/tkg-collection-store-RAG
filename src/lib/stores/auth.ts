@@ -3,8 +3,7 @@ import { browser } from "$app/environment";
 
 export interface User {
   username: string;
-  id: number;
-  // Add other fields as needed
+  id: string;
 }
 
 function createAuthStore() {

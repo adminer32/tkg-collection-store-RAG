@@ -1,18 +1,13 @@
-# Svelte library
+# sv
 
-Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
-
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
 ## Creating a project
 
 If you're seeing this, you've probably already done this step. Congrats!
 
 ```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
+# create a new project
 npx sv create my-app
 ```
 
@@ -20,7 +15,36 @@ To recreate this project with the same configuration:
 
 ```sh
 # recreate this project
-npx sv@0.12.5 create --template library --types ts --install npm tkg-collection-store
+npx sv@0.17.0 create --template minimal --types ts --install npm ./
+```
+
+## RAG 店员助手（Go）
+
+商品目录检索与问答跑在独立的 Go 服务里，不占用现有 SvelteKit/SQLite 认证链路。
+
+```sh
+# 终端 1：Go RAG
+cd services/rag
+go test ./...
+go run .
+
+# 终端 2：SvelteKit
+npm run dev
+```
+
+打开 `/shop` 即可浏览目录并向店员助手提问。SvelteKit 通过 `RAG_URL`（默认 `http://127.0.0.1:8081`）反代到 Go。商店、代寄页和 RAG 共用 `services/rag/data/catalog.json`。
+
+相关页面：
+
+- `/shop` 目录 + 店员助手
+- `/shop/sent` 代寄 / 邮路测试申请
+- `/about/contact` 店铺咨询
+- `/userspace` 我的申请与提问记录
+
+也可用 Compose 同时启动：
+
+```sh
+docker compose up --build
 ```
 
 ## Developing
@@ -34,17 +58,9 @@ npm run dev
 npm run dev -- --open
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
-
 ## Building
 
-To build your library:
-
-```sh
-npm pack
-```
-
-To create a production version of your showcase app:
+To create a production version of your app:
 
 ```sh
 npm run build
@@ -53,13 +69,3 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```sh
-npm publish
-```
